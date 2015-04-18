@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  ContactViewer
 //
-//  Created by Giovanni Galasso on 4/11/15.
+//  Created by Ed Castilloe on 4/11/15.
 //  Copyright (c) 2015 seng5199-3. All rights reserved.
 //
 

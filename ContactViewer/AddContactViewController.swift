@@ -15,7 +15,10 @@ class AddContactViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.navigationItem.title = "Add Contact"
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "insertNewContact:")
+        self.navigationItem.rightBarButtonItem = addButton
         // Do any additional setup after loading the view.
         
         /*if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
@@ -73,17 +76,35 @@ class AddContactViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     @IBOutlet weak var cName: UITextField!
     @IBOutlet weak var cTwitter: UITextField!
     @IBOutlet weak var cEmail: UITextField!
     @IBOutlet weak var cPhoneNumber: UITextField!
     @IBOutlet weak var cTitle: UITextField!
-    
-    @IBAction func saveContact(sender: AnyObject) {
-    }
+    @IBOutlet weak var cNameLabel: UILabel!
 
+    func insertNewContact(sender: AnyObject) {
+        
+        if(!cName.text.isEmpty ) {
+            let newContact = Contact( name: cName.text, phone: cPhoneNumber.text, title: cTitle.text, email: cEmail.text, twitterId:cTwitter.text)
+            RolodexSpindle.sharedInstance.addCard(newContact)
+            //IDLabel.text = newContact.id
+            NSLog("Cname: \(cName.text)")
+                self.navigationController?.popToRootViewControllerAnimated(true)
+        } else if (cName.text == "") {
+            var alert = UIAlertController(title: "Error!", message: "Name is required.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            cNameLabel.textColor = UIColor.redColor()
+}
+        
+        
+        
+    }
+    
     @IBAction func doneButtonPressed(sender: AnyObject) {
-        let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
+        let contact1 = Contact( name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
         
     }
     
