@@ -10,14 +10,14 @@ import UIKit
 
 class AddContactViewController: UIViewController {
 
-    let file = "contacts.txt"
+    let fh = FileCabinet()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.title = "Add Contact"
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Save, target: self, action: "insertNewContact:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "insertNewContact:")
         self.navigationItem.rightBarButtonItem = addButton
         // Do any additional setup after loading the view.
         
@@ -71,7 +71,7 @@ class AddContactViewController: UIViewController {
 
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -89,6 +89,7 @@ class AddContactViewController: UIViewController {
         if(!cName.text.isEmpty ) {
             let newContact = Contact( name: cName.text, phone: cPhoneNumber.text, title: cTitle.text, email: cEmail.text, twitterId:cTwitter.text)
             RolodexSpindle.sharedInstance.addCard(newContact)
+            fh.writeContactsToFile()
             //IDLabel.text = newContact.id
             NSLog("Cname: \(cName.text)")
                 self.navigationController?.popToRootViewControllerAnimated(true)

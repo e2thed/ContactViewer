@@ -12,7 +12,7 @@ class FileCabinet: NSObject {
     let file = "contacts.json"
     var textRead = ""
     
-    func readFromFile () -> String {
+    func readFromFile () -> Int {
         if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
             let dir = dirs[0] //documents directory
             let path = dir.stringByAppendingPathComponent(file);
@@ -21,15 +21,15 @@ class FileCabinet: NSObject {
             var err = NSError?()
             var jArray:NSArray = NSJSONSerialization.JSONObjectWithData(jData!, options: NSJSONReadingOptions.MutableContainers, error: &err)! as NSArray
             
-            println(jArray.objectAtIndex(0).objectForKey("name")!)
+            //println(jArray.objectAtIndex(0).objectForKey("name")!)
             
             convertFromJSON(jArray)
             
         } else {
-            return "Unable to read from file."
+            //throw alert
+            return -1
         }
-        return textRead
-        
+        return RolodexSpindle.sharedInstance.rolodex.count
     }
     
     func writeContactsToFile () {

@@ -19,12 +19,12 @@ class RolodexSpindle : NSObject {
     }
     
     override init() {
-//        let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
-//        let contact2 = Contact(name: "Skyler White", phone: "612-664-1235", title: "Mom", email: "sky@bb.com", twitterId: "skyblue")
-//        let contact3 = Contact(name: "Jessie Pinkman", phone: "612-664-1236", title: "Junkie", email: "jessie@bb.com", twitterId: "jp")
-//        rolodex.append(contact1)
-//        rolodex.append(contact2)
-//        rolodex.append(contact3)
+        //let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
+        //let contact2 = Contact(name: "Skyler White", phone: "612-664-1235", title: "Mom", email: "sky@bb.com", twitterId: "skyblue")
+        //let contact3 = Contact(name: "Jessie Pinkman", phone: "612-664-1236", title: "Junkie", email: "jessie@bb.com", twitterId: "jp")
+        //rolodex.append(contact1)
+        //rolodex.append(contact2)
+        //rolodex.append(contact3)
     }
     
     func loadRolodexSpindle() -> [Contact] {
@@ -44,7 +44,16 @@ class RolodexSpindle : NSObject {
         rolodex.append(contact)
     }
     
-    func updateCard(id:String){
-        
+    func updateCard(c: Contact){
+        for contact in rolodex {
+            if c.uuid == contact.uuid {
+                contact.name = c.name
+                contact.title = c.title
+                contact.phone = c.phone
+                contact.email = c.email
+                contact.twitterId = c.twitterId
+                break
+            }
+        }
     }
 }

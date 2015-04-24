@@ -28,7 +28,7 @@ class MasterViewController: UITableViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         
-        self.navigationItem.title = "RoloTM"
+        self.navigationItem.title = "Contacts"
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
         self.navigationItem.rightBarButtonItem = addButton
@@ -37,15 +37,23 @@ class MasterViewController: UITableViewController {
             self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
         }
         
-//        fh.writeContactsToFile()
-//        println(fh.readFromFile())
-        
-        fh.readFromFile()
-        
-        
-
+        if (fh.readFromFile() == 0) {
+            let contact1 = Contact(name: "Walter White", phone: "612-664-1234", title: "Chemist", email: "walt@bb.com", twitterId: "ww")
+            let contact2 = Contact(name: "Skyler White", phone: "612-664-1235", title: "Mom", email: "sky@bb.com", twitterId: "skyblue")
+            let contact3 = Contact(name: "Jessie Pinkman", phone: "612-664-1236", title: "Junkie", email: "jessie@bb.com", twitterId: "jp")
+            RolodexSpindle.sharedInstance.rolodex.append(contact1)
+            RolodexSpindle.sharedInstance.rolodex.append(contact2)
+            RolodexSpindle.sharedInstance.rolodex.append(contact3)
+            
+            fh.writeContactsToFile()
+        }
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        self.tableView.reloadData()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -105,6 +113,7 @@ class MasterViewController: UITableViewController {
             //contacts.removeAtIndex(indexPath.row)
             let object = rsi.loadRolodexSpindle()[indexPath.row] as Contact
             rsi.deleteCard(object)
+            fh.writeContactsToFile()
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
         } else if editingStyle == .Insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -115,8 +124,5 @@ class MasterViewController: UITableViewController {
 //        let evc = EditViewController(nibName: "EditViewController", bundle: nil)
 //        self.navigationController?.pushViewController(evc, animated: true)
     }
-
-    
-
 }
 
