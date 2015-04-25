@@ -16,7 +16,14 @@ class FileCabinet: NSObject {
         if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
             let dir = dirs[0] //documents directory
             let path = dir.stringByAppendingPathComponent(file);
-            textRead = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)!
+            if let testVar = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
+            {
+                textRead = testVar
+            }
+            else
+            {
+                return 0
+            }
             let jData:NSData? = textRead.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
             var err = NSError?()
             var jArray:NSArray = NSJSONSerialization.JSONObjectWithData(jData!, options: NSJSONReadingOptions.MutableContainers, error: &err)! as NSArray
